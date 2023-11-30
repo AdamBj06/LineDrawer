@@ -28,38 +28,35 @@ namespace LineDrawer
             CreateGrid();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            int.TryParse(textBox1.Text, out x1);
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            int.TryParse(textBox2.Text, out y1);
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-            int.TryParse(textBox3.Text, out x2);
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-            int.TryParse(textBox4.Text, out y2);
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "")
+            if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "")
             {
-                MessageBox.Show("TextBox vuota");
+                MessageBox.Show("valori mancanti", "Errore", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (!int.TryParse(textBox1.Text, out x1) || !int.TryParse(textBox2.Text, out y1) || !int.TryParse(textBox3.Text, out x2) || !int.TryParse(textBox4.Text, out y2))
+            {
+                MessageBox.Show("i valori non sono accettabili (devono essere numeri interi)", "Errore", MessageBoxButtons.OK);
                 return;
             }
             else if(x2 <= x1 || y2 <= y1)
             {
-                MessageBox.Show("i pt inziali devono essere più piccoli dei pt finali");
+                MessageBox.Show("la pendenza deve essere maggiore di 0\n(i pt inziali devono essere minori dei pt finali)", "Errore", MessageBoxButtons.OK);
                 return;
             }
+            else if (x2 < y2)
+            {
+                MessageBox.Show("la pendenza deve essere minore di 1\n(y finale deve essere minore di x finale)", "Errore", MessageBoxButtons.OK);
+                return;
+            }
+            else if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0)
+            {
+                MessageBox.Show("i punti inziali e finali devono essere positivi", "Errore", MessageBoxButtons.OK);
+                return;
+            }
+
             g = CreateGraphics();
             g.Clear(Color.White);
             CreateGrid();
@@ -82,6 +79,18 @@ namespace LineDrawer
 
                 DrawPixel(x, y);
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            g = CreateGraphics();
+            g.Clear(Color.White);
+            CreateGrid();
+
+            textBox1.Text = "X iniziale";
+            textBox2.Text = "Y iniziale";
+            textBox3.Text = "X finale";
+            textBox4.Text = "Y finale";
         }
 
         public void DrawPixel(int x, int y)
