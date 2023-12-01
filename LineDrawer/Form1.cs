@@ -96,18 +96,18 @@ namespace LineDrawer
         public void DrawPixel(int x, int y)
         {
             g = CreateGraphics();
-            g.FillRectangle(Brushes.Black, 20 * x, 740 - 20 * y, 20, 20);
+            g.FillRectangle(Brushes.Black, 10 * x, 740 - 10 * y, 10, 10);
         }
 
         public void CreateGrid()
         {
-            for (int i = 20; i < 800; i += 20)
+            for (int i = 1; i < 80; i ++)
             {
-                g.DrawLine(Pens.Black, i, 0, i, 800);
+                g.DrawLine(Pens.Black, i*10, 0, i*10, 800);
             }
-            for (int i = 20; i < 800; i += 20)
+            for (int i = 1; i < 80; i ++)
             {
-                g.DrawLine(Pens.Black, 0, i, 800, i);
+                g.DrawLine(Pens.Black, 0, i * 10, 800, i*10);
             }
         }
     }
